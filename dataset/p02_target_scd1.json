@@ -1,0 +1,16 @@
+{
+	"name": "p02_target_scd1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "p02_target_scd1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SYSTEM",
+			"table": "target_scd1"
+		}
+	}
+}
