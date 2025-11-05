@@ -1,0 +1,84 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "divyapavan"
+		},
+		"p01_latestfile_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'p01_latestfile'"
+		},
+		"p01_latestfile_01_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'p01_latestfile_01'"
+		},
+		"p01_latestfile_target_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'p01_latestfile_target'"
+		},
+		"p01_latestfile_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://cxdatapoc.dfs.core.windows.net/"
+		},
+		"p01_latestfile_01_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://cxdatapoc.dfs.core.windows.net/"
+		},
+		"p01_latestfile_target_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://cxdatapoc.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "divyapavan_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"p01_latestfile_accountKey": {
+						"value": "[parameters('p01_latestfile_accountKey')]"
+					},
+					"p01_latestfile_01_accountKey": {
+						"value": "[parameters('p01_latestfile_01_accountKey')]"
+					},
+					"p01_latestfile_target_accountKey": {
+						"value": "[parameters('p01_latestfile_target_accountKey')]"
+					},
+					"p01_latestfile_properties_typeProperties_url": {
+						"value": "[parameters('p01_latestfile_properties_typeProperties_url')]"
+					},
+					"p01_latestfile_01_properties_typeProperties_url": {
+						"value": "[parameters('p01_latestfile_01_properties_typeProperties_url')]"
+					},
+					"p01_latestfile_target_properties_typeProperties_url": {
+						"value": "[parameters('p01_latestfile_target_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
