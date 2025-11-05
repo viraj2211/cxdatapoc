@@ -9,7 +9,7 @@
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "SYSTEM",
+			"schema": "",
 			"table": "source_scd1"
 		}
 	}
