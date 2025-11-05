@@ -1,0 +1,24 @@
+{
+	"name": "p01",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "p01_latestfile",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2025-11-05T14:13:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
