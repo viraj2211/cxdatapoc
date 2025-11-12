@@ -1,0 +1,29 @@
+{
+	"name": "positionalfile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "positionalfile",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "positional.txt",
+				"folderPath": "sourcedata",
+				"fileSystem": "inputdata"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "00001John Smith          HR 0005000020230115",
+				"type": "String"
+			}
+		]
+	}
+}
