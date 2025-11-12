@@ -26,6 +26,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "scd_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
 				}
 			],
 			"transformations": [
@@ -33,7 +40,13 @@
 					"name": "join1"
 				},
 				{
-					"name": "alterRow1"
+					"name": "split1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "select2"
 				}
 			],
 			"scriptLines": [
@@ -64,22 +77,39 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> source2",
-				"source1, source2 join(source1@Team == source2@{First Name},",
-				"     joinType:'inner',",
+				"source1, source2 join(source1@Team == source2@Team,",
+				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join1",
-				"join1 alterRow(updateIf(!isNull(source1@Team) && \r",
-				"!isNull(source2@Team) &&\r",
-				"source1@Team == source2@Team &&\r",
-				"(\r",
-				"    !equals({Senior Management}, Senior_Management) ||\r",
-				"    !equals(source1@Gender, source2@Gender)\r",
-				")\r",
-				"),",
-				"     insertIf(isNull(source2@Team)\r",
-				")) ~> alterRow1",
-				"alterRow1 sink(allowSchemaDrift: true,",
+				"join1 split(!isNull(source1@Team) && ({Senior Management} != Senior_Management || source1@Gender != source2@Gender),",
+				"     isNull(source2@Team),",
+				"     disjoint: false) ~> split1@(updated, insert)",
+				"split1@updated select(mapColumn(",
+				"          FirstName = First_Name,",
+				"          Gender = split1@updated@Gender,",
+				"          StartDate = Start_Date,",
+				"          LastLoginTime = Last_Login_Time,",
+				"          Salary = split1@updated@Salary,",
+				"          Bonus,",
+				"          SeniorManagement = Senior_Management,",
+				"          Team = split1@updated@Team",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"split1@insert select(mapColumn(",
+				"          FirstName = {First Name},",
+				"          Gender = split1@insert@Gender,",
+				"          StartDate = {Start Date},",
+				"          LastLoginTime = {Last Login Time},",
+				"          Salary = split1@insert@Salary,",
+				"          Bonus = {Bonus %},",
+				"          SeniorManagement = {Senior Management},",
+				"          Team = split1@insert@Team",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          First_Name as string,",
@@ -96,7 +126,27 @@
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sink1",
+				"select2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          First_Name as string,",
+				"          Gender as string,",
+				"          Start_Date as string,",
+				"          Last_Login_Time as string,",
+				"          Salary as string,",
+				"          Bonus as string,",
+				"          Senior_Management as string,",
+				"          Team as string",
+				"     ),",
+				"     format: 'parquet',",
+				"     partitionFileNames:['scd'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink2"
 			]
 		}
 	}
