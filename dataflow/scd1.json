@@ -1,0 +1,76 @@
+{
+	"name": "scd1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "scdsourcedata",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "scdlookupdata",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "alterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {First Name} as string,",
+				"          Gender as string,",
+				"          {Start Date} as string,",
+				"          {Last Login Time} as string,",
+				"          Salary as string,",
+				"          {Bonus %} as string,",
+				"          {Senior Management} as string,",
+				"          Team as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          {First Name} as string,",
+				"          Gender as string,",
+				"          {Start Date} as string,",
+				"          {Last Login Time} as string,",
+				"          Salary as string,",
+				"          {Bonus %} as string,",
+				"          {Senior Management} as string,",
+				"          Team as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source2",
+				"source1, source2 join(source1@Team == source2@{First Name},",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 alterRow(updateIf(!isNull(source1@Team) && \r",
+				"!isNull(source2@Team) &&\r",
+				"source1@Team == source2@Team &&\r",
+				"(\r",
+				"    !equals(source1@{Senior Management}, source2@{Senior Management}) ||\r",
+				"    !equals(source1@Gender, source2@Gender)\r",
+				")\r",
+				"),",
+				"     insertIf(isNull(source2@Team)\r",
+				")) ~> alterRow1"
+			]
+		}
+	}
+}
