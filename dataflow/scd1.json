@@ -13,13 +13,21 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "scdlookupdata",
+						"referenceName": "scd_parquet",
 						"type": "DatasetReference"
 					},
 					"name": "source2"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "scd_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "join1"
@@ -43,18 +51,19 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
 				"source(output(",
-				"          {First Name} as string,",
+				"          First_Name as string,",
 				"          Gender as string,",
-				"          {Start Date} as string,",
-				"          {Last Login Time} as string,",
+				"          Start_Date as string,",
+				"          Last_Login_Time as string,",
 				"          Salary as string,",
-				"          {Bonus %} as string,",
-				"          {Senior Management} as string,",
+				"          Bonus as string,",
+				"          Senior_Management as string,",
 				"          Team as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source2",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> source2",
 				"source1, source2 join(source1@Team == source2@{First Name},",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
@@ -64,12 +73,30 @@
 				"!isNull(source2@Team) &&\r",
 				"source1@Team == source2@Team &&\r",
 				"(\r",
-				"    !equals(source1@{Senior Management}, source2@{Senior Management}) ||\r",
+				"    !equals({Senior Management}, Senior_Management) ||\r",
 				"    !equals(source1@Gender, source2@Gender)\r",
 				")\r",
 				"),",
 				"     insertIf(isNull(source2@Team)\r",
-				")) ~> alterRow1"
+				")) ~> alterRow1",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          First_Name as string,",
+				"          Gender as string,",
+				"          Start_Date as string,",
+				"          Last_Login_Time as string,",
+				"          Salary as string,",
+				"          Bonus as string,",
+				"          Senior_Management as string,",
+				"          Team as string",
+				"     ),",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}

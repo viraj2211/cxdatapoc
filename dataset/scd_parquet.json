@@ -1,0 +1,54 @@
+{
+	"name": "scd_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "scd1_parquet",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "employees_target.parquet",
+				"folderPath": "scdtarget",
+				"fileSystem": "inputdata"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "First_Name",
+				"type": "UTF8"
+			},
+			{
+				"name": "Gender",
+				"type": "UTF8"
+			},
+			{
+				"name": "Start_Date",
+				"type": "UTF8"
+			},
+			{
+				"name": "Last_Login_Time",
+				"type": "UTF8"
+			},
+			{
+				"name": "Salary",
+				"type": "UTF8"
+			},
+			{
+				"name": "Bonus",
+				"type": "UTF8"
+			},
+			{
+				"name": "Senior_Management",
+				"type": "UTF8"
+			},
+			{
+				"name": "Team",
+				"type": "UTF8"
+			}
+		]
+	}
+}
