@@ -1,0 +1,57 @@
+{
+	"name": "scdlookupdata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "scdlookupdata",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "employees_target.csv",
+				"folderPath": "scdtarget",
+				"fileSystem": "inputdata"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "First Name",
+				"type": "String"
+			},
+			{
+				"name": "Gender",
+				"type": "String"
+			},
+			{
+				"name": "Start Date",
+				"type": "String"
+			},
+			{
+				"name": "Last Login Time",
+				"type": "String"
+			},
+			{
+				"name": "Salary",
+				"type": "String"
+			},
+			{
+				"name": "Bonus %",
+				"type": "String"
+			},
+			{
+				"name": "Senior Management",
+				"type": "String"
+			},
+			{
+				"name": "Team",
+				"type": "String"
+			}
+		]
+	}
+}
