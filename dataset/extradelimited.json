@@ -1,0 +1,37 @@
+{
+	"name": "extradelimited",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "extradelimited",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "employees_target.csv",
+				"folderPath": "scdtarget",
+				"fileSystem": "inputdata"
+			},
+			"columnDelimiter": "\t",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "empid",
+				"type": "String"
+			},
+			{
+				"name": "empname",
+				"type": "String"
+			},
+			{
+				"name": "sal",
+				"type": "String"
+			}
+		]
+	}
+}
