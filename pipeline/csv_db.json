@@ -90,7 +90,13 @@
 							"outputs": [
 								{
 									"referenceName": "OracleTable1",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"tablename": {
+											"value": "@replace(item().name,'.xlsx','')",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
