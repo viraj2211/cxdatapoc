@@ -1,0 +1,65 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "positionalfile",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "p01_latestfile_target",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {00001John Smith          HR 0005000020230115} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(ID = substring({00001John Smith          HR 0005000020230115},1,5),",
+				"          Name = substring({00001John Smith          HR 0005000020230115},6,25),",
+				"          DeptCode = substring({00001John Smith          HR 0005000020230115},26,28),",
+				"          Salary = substring({00001John Smith          HR 0005000020230115},29,36),",
+				"          JoiningDate = substring({00001John Smith          HR 0005000020230115},37,44)) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          ID,",
+				"          Name,",
+				"          DeptCode,",
+				"          Salary,",
+				"          JoiningDate",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['employees'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}
