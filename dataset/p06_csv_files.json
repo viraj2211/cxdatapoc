@@ -1,5 +1,5 @@
 {
-	"name": "csv_files",
+	"name": "p06_csv_files",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage3",
