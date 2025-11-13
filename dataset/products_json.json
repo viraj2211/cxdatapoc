@@ -1,0 +1,55 @@
+{
+	"name": "products_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "json_products",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "products.json",
+				"folderPath": "scdtarget",
+				"fileSystem": "inputdata"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"products": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"product_id": {
+								"type": "string"
+							},
+							"name": {
+								"type": "string"
+							},
+							"reviews": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"user": {
+											"type": "string"
+										},
+										"rating": {
+											"type": "integer"
+										},
+										"comment": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

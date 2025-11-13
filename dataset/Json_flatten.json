@@ -1,0 +1,84 @@
+{
+	"name": "Json_flatten",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "json_flatten",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "sample_nested.json",
+				"folderPath": "scdtarget",
+				"fileSystem": "inputdata"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"coffee": {
+					"type": "object",
+					"properties": {
+						"region": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "integer"
+									},
+									"name": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"country": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "integer"
+								},
+								"company": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"brewing": {
+					"type": "object",
+					"properties": {
+						"region": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "integer"
+									},
+									"name": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"country": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "integer"
+								},
+								"company": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

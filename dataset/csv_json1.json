@@ -1,0 +1,19 @@
+{
+	"name": "csv_json1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "csv1_json",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "sourcedata",
+				"fileSystem": "inputdata"
+			}
+		},
+		"schema": {}
+	}
+}

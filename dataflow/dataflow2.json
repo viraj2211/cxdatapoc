@@ -1,0 +1,71 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "csv_json",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "csv_json1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "aggregate1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          order_id as string,",
+				"          customer_id as string,",
+				"          customer_name as string,",
+				"          customer_email as string,",
+				"          customer_phone as string,",
+				"          product_id as string,",
+				"          product_name as string,",
+				"          quantity as string,",
+				"          price as string,",
+				"          order_date as string,",
+				"          status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(sales = @(product_id=product_id,",
+				"          product_name=product_name,",
+				"          quantity=quantity,",
+				"          price=price,",
+				"          order_date=order_date,",
+				"          status=status)) ~> derivedColumn1",
+				"derivedColumn1 aggregate(groupBy(order_id,",
+				"          customer_id,",
+				"          customer_name,",
+				"          customer_email,",
+				"          customer_phone),",
+				"     sales = collect(sales)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}
