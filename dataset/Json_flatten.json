@@ -18,62 +18,43 @@
 		"schema": {
 			"type": "object",
 			"properties": {
-				"coffee": {
-					"type": "object",
-					"properties": {
-						"region": {
-							"type": "array",
-							"items": {
-								"type": "object",
-								"properties": {
-									"id": {
-										"type": "integer"
-									},
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						},
-						"country": {
-							"type": "object",
-							"properties": {
-								"id": {
-									"type": "integer"
-								},
-								"company": {
-									"type": "string"
-								}
-							}
-						}
-					}
+				"order_id": {
+					"type": "string"
 				},
-				"brewing": {
-					"type": "object",
-					"properties": {
-						"region": {
-							"type": "array",
-							"items": {
-								"type": "object",
-								"properties": {
-									"id": {
-										"type": "integer"
-									},
-									"name": {
-										"type": "string"
-									}
-								}
-							}
-						},
-						"country": {
-							"type": "object",
-							"properties": {
-								"id": {
-									"type": "integer"
-								},
-								"company": {
-									"type": "string"
-								}
+				"customer_id": {
+					"type": "string"
+				},
+				"customer_name": {
+					"type": "string"
+				},
+				"customer_email": {
+					"type": "string"
+				},
+				"customer_phone": {
+					"type": "string"
+				},
+				"sales": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"product_id": {
+								"type": "string"
+							},
+							"product_name": {
+								"type": "string"
+							},
+							"quantity": {
+								"type": "string"
+							},
+							"price": {
+								"type": "string"
+							},
+							"order_date": {
+								"type": "string"
+							},
+							"status": {
+								"type": "string"
 							}
 						}
 					}
