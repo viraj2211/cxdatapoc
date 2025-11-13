@@ -5,6 +5,11 @@
 			"referenceName": "p06_csv_target_files",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"targetfiles": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
