@@ -1,0 +1,36 @@
+{
+	"name": "positional_file",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "positional",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "scdtarget",
+				"fileSystem": "inputdata"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "empid",
+				"type": "String"
+			},
+			{
+				"name": "empname",
+				"type": "String"
+			},
+			{
+				"name": "sal",
+				"type": "String"
+			}
+		]
+	}
+}

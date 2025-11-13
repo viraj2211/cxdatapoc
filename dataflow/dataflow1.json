@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "p01_latestfile_target",
+						"referenceName": "positional_file",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -52,6 +52,11 @@
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          empid as string,",
+				"          empname as string,",
+				"          sal as string",
+				"     ),",
 				"     partitionFileNames:['employees'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
