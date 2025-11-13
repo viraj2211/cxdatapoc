@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "sample_nested.json",
-				"folderPath": "scdtarget",
+				"fileName": "part-00000-bd570210-272b-4a8b-b64c-e106e96fac43-c000.json",
+				"folderPath": "sourcedata",
 				"fileSystem": "inputdata"
 			}
 		},
