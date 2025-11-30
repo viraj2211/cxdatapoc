@@ -1,0 +1,16 @@
+{
+	"name": "P07_Dynamic_db_db",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "p07_dynamic_db_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SYSTEM",
+			"table": ""
+		}
+	}
+}
