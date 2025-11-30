@@ -17,12 +17,8 @@
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": {
-				"value": "@dataset().SCHEMANAME",
-				"type": "Expression"
-			},
 			"table": {
-				"value": "@dataset().TABLENAME",
+				"value": "@concat(dataset().SchemaName, '.', dataset().TableName)",
 				"type": "Expression"
 			}
 		}
