@@ -5,12 +5,26 @@
 			"referenceName": "p07_dynamic_db_db",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"SCHEMANAME": {
+				"type": "string"
+			},
+			"TABLENAME": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "SYSTEM",
-			"table": ""
+			"schema": {
+				"value": "@dataset().SCHEMANAME",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().TABLENAME",
+				"type": "Expression"
+			}
 		}
 	}
 }
